@@ -23,16 +23,17 @@ def update():
     data=r['result']
     message=data[-1]['message']['text']
     id=data[-1]['message']['from']['id']
-    return message,id
+    date=data[-1]['message']['date']
+    return message,id,date
 
 
-last_text=""
+last_date=None
 while True :
     
-    text,id=update()
-    if last_text!=text:
+    text,id,date=update()
+    if last_date!=date:
         sendMsg(id,text)
-        last_text=text
+        last_date=date
     
 
 
