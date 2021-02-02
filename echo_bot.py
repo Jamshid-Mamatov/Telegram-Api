@@ -10,18 +10,32 @@ def sendMsg(id,text):
     payload={
         'chat_id':id,
         'text':text
+
     }
     r=requests.get(url,params=payload)
-    print(r.url)
+    
 
 
-url=f"https://api.telegram.org/bot{token}/getUpdates"
-r=requests.get(url).json()
-data=r['result']
-user_msg={}
-ids=[]
-for i in data:
-    id=i['message']['from']['id']
-    text=i['message']['text']
-    sendMsg(id,text)
+def update():
+
+    url=f"https://api.telegram.org/bot{token}/getUpdates"
+    r=requests.get(url).json()
+    data=r['result']
+    message=data[-1]['message']['text']
+    id=data[-1]['message']['from']['id']
+    return message,id
+
+
+last_text=""
+while True :
+    
+    text,id=update()
+    if last_text!=text:
+        sendMsg(id,text)
+        last_text=text
+    
+
+
+
+
 
