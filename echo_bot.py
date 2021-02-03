@@ -10,7 +10,8 @@ def sendMsg(id,text,msg_id):
     url=f"https://api.telegram.org/bot{token}/sendMessage"
     
     payload={
-        
+        'chat_id':id,
+        'text':text,
         'reply_to_message_id':msg_id
     }
     r=requests.get(url,params=payload)
